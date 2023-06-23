@@ -9,7 +9,7 @@
           "error",
           {
             "type": "attribute",
-            "prefix": "bluebits",
+            "prefix": "ngeshop",
             "style": "camelCase"
           }
         ],
@@ -17,10 +17,16 @@
           "error",
           {
             "type": "element",
-            "prefix": "bluebits",
+            "prefix": "ngeshop",
             "style": "kebab-case"
           }
-        ]
+        ],
+         // Note: you must disable the base rule as it can report incorrect errors
+        "no-empty-function": "off",
+        //empty fuction
+        "@typescript-eslint/no-empty-function": "off",
+        //empty life cycle
+        "@angular-eslint/no-empty-lifecycle-method": "off"
       },
       "extends": [
         "plugin:@nx/angular",
