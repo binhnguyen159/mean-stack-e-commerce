@@ -1,3 +1,18 @@
+// Base
 @import 'base/colors.scss';
-@import 'base/configuation.scss';
 @import 'base/fonts.scss';
+@import 'base/mixins.scss';
+@import 'base/configuation.scss';
+
+// Libs
+@import 'libs/ui/ui.scss';
+
+// Css Libraríes
+// @import '~';
+@import "primeng/resources/themes/saga-blue/theme.css";
+@import "primeng/resources/primeng.css";
+@import "primeicons/primeicons.css";
+@import "primeflex/primeflex.scss";
+
+// Shell
+@import "apps/admin/shell.scss";

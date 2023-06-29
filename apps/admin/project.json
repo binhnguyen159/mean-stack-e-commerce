@@ -16,7 +16,11 @@
         "polyfills": ["zone.js"],
         "tsConfig": "apps/admin/tsconfig.app.json",
         "assets": ["apps/admin/src/favicon.ico", "apps/admin/src/assets"],
-        "styles": ["apps/admin/src/styles.scss"],
+        "styles": [
+          "apps/admin/src/styles.scss",
+          "node_modules/quill/dist/quill.core.css",
+          "node_modules/quill/dist/quill.snow.css"
+        ],
         "scripts": []
       },
       "configurations": {
@@ -41,7 +45,13 @@
           "vendorChunk": true,
           "extractLicenses": false,
           "sourceMap": true,
-          "namedChunks": true
+          "namedChunks": true,
+          "fileReplacements": [
+            {
+              "replace": "environments/environment.ts",
+              "with": "environments/environment.development.ts"
+            }
+          ]
         }
       },
       "defaultConfiguration": "production"
