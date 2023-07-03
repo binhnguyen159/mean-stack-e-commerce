@@ -1,15 +1,17 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { CategoriesService, Category } from '@bluebits/products';
 import { MessageService, ConfirmationService } from 'primeng/api';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'admin-categories-list',
   templateUrl: './categories-list.component.html',
   styleUrls: ['./categories-list.component.scss']
 })
-export class CategoriesListComponent implements OnInit {
+export class CategoriesListComponent implements OnInit, OnDestroy {
   categories: Category[];
+  subscriptions: Subscription[] = [];
 
   constructor(
     private categoriesService: CategoriesService,
@@ -19,9 +21,15 @@ export class CategoriesListComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.categoriesService.getCategories().subscribe((res) => {
-      this.categories = res;
-    });
+    this.subscriptions.push(
+      this.categoriesService.getCategories().subscribe((res) => {
+        this.categories = res;
+      })
+    );
+  }
+
+  ngOnDestroy(): void {
+    this.subscriptions.forEach((subscription) => subscription.unsubscribe());
   }
 
   handleUpdateCategory(id: string) {
@@ -40,24 +48,26 @@ export class CategoriesListComponent implements OnInit {
   }
 
   deleteCategory(id: string) {
-    this.categoriesService.deleteCategory(id).subscribe(
-      () => {
-        this.messageService.add({
-          severity: 'success',
-          summary: 'Success',
-          detail: 'Remove category successfull'
-        });
-        this.categories = this.categories.filter(
-          (category) => category.id !== id
-        );
-      },
-      () => {
-        this.messageService.add({
-          severity: 'error',
-          summary: 'Failed',
-          detail: 'Remove category falied'
-        });
-      }
+    this.subscriptions.push(
+      this.categoriesService.deleteCategory(id).subscribe(
+        () => {
+          this.messageService.add({
+            severity: 'success',
+            summary: 'Success',
+            detail: 'Remove category successfull'
+          });
+          this.categories = this.categories.filter(
+            (category) => category.id !== id
+          );
+        },
+        () => {
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Failed',
+            detail: 'Remove category falied'
+          });
+        }
+      )
     );
   }
 }

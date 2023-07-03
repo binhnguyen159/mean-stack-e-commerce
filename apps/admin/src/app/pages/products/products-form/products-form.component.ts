@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
@@ -8,19 +8,20 @@ import {
   ProductsService
 } from '@bluebits/products';
 import { MessageService } from 'primeng/api';
-import { timer } from 'rxjs';
+import { timer, Subscription } from 'rxjs';
 
 @Component({
   selector: 'admin-products-form',
   templateUrl: './products-form.component.html',
   styleUrls: ['./products-form.component.scss']
 })
-export class ProductsFormComponent implements OnInit {
+export class ProductsFormComponent implements OnInit, OnDestroy {
   form: FormGroup;
   isSubmited = false;
   currentProductId: string;
   categories = [];
   imageDisplay: string | ArrayBuffer;
+  subscriptions: Subscription[] = [];
 
   constructor(
     private location: Location,
@@ -35,29 +36,39 @@ export class ProductsFormComponent implements OnInit {
     this.initForm();
     this.getCategories();
 
-    this.route.params.subscribe((param) => {
-      if (param['id']) {
-        this.currentProductId = param['id'];
-        this.getProduct(param['id']);
-      }
-    });
+    this.subscriptions.push(
+      this.route.params.subscribe((param) => {
+        if (param['id']) {
+          this.currentProductId = param['id'];
+          this.getProduct(param['id']);
+        }
+      })
+    );
+  }
+
+  ngOnDestroy(): void {
+    this.subscriptions.forEach((subscription) => subscription.unsubscribe());
   }
 
   getProduct(id: string) {
-    this.productsService.getDetailProduct(id).subscribe((product: Product) => {
-      const arrayKeys = Object.keys(this.form.controls);
-      for (let i = 0; i < arrayKeys.length; i++) {
-        console.log(arrayKeys[i]);
-        if (arrayKeys[i] === 'category') {
-          this.form.controls[arrayKeys[i]].setValue(
-            product[arrayKeys[i]].id || ''
-          );
-        } else {
-          this.form.controls[arrayKeys[i]].setValue(product[arrayKeys[i]]);
-        }
-      }
-      this.imageDisplay = product.image;
-    });
+    this.subscriptions.push(
+      this.productsService
+        .getDetailProduct(id)
+        .subscribe((product: Product) => {
+          const arrayKeys = Object.keys(this.form.controls);
+          for (let i = 0; i < arrayKeys.length; i++) {
+            console.log(arrayKeys[i]);
+            if (arrayKeys[i] === 'category') {
+              this.form.controls[arrayKeys[i]].setValue(
+                product[arrayKeys[i]].id || ''
+              );
+            } else {
+              this.form.controls[arrayKeys[i]].setValue(product[arrayKeys[i]]);
+            }
+          }
+          this.imageDisplay = product.image;
+        })
+    );
     this.form.controls['image'].setValidators([]);
     this.form.controls['image'].updateValueAndValidity();
   }
@@ -106,50 +117,60 @@ export class ProductsFormComponent implements OnInit {
   }
 
   getCategories() {
-    this.categoriesService.getCategories().subscribe((categories) => {
-      this.categories = categories;
-    });
+    this.subscriptions.push(
+      this.categoriesService.getCategories().subscribe((categories) => {
+        this.categories = categories;
+      })
+    );
   }
   addProduct(product: FormData) {
-    this.productsService.addProduct(product).subscribe(
-      () => {
-        this.messageService.add({
-          severity: 'success',
-          summary: 'Success',
-          detail: 'Create product successful!'
-        });
-        timer(2000).toPromise().then(() => {
-          this.handleBack();
-        })
-      },
-      () => {
-        this.messageService.add({
-          severity: 'error',
-          summary: 'Error',
-          detail: 'Create product failed!'
-        });
-      }
+    this.subscriptions.push(
+      this.productsService.addProduct(product).subscribe(
+        () => {
+          this.messageService.add({
+            severity: 'success',
+            summary: 'Success',
+            detail: 'Create product successful!'
+          });
+          timer(2000)
+            .toPromise()
+            .then(() => {
+              this.handleBack();
+            });
+        },
+        () => {
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Error',
+            detail: 'Create product failed!'
+          });
+        }
+      )
     );
   }
   updateProduct(product: FormData) {
-    this.productsService.updateProduct(product).subscribe(
-      () => {
-        this.messageService.add({
-          severity: 'success',
-          summary: 'Success',
-          detail: 'Update product successful!'
-        });
-        timer(2000).toPromise().then(() => {
-          this.handleBack();
-        })
-      },
-      () => {
-        this.messageService.add({
-          severity: 'error',
-          summary: 'Error',
-          detail: 'Update product failed!'
-        });
-      }
+    this.subscriptions.push(
+      this.productsService.updateProduct(product).subscribe(
+        () => {
+          this.messageService.add({
+            severity: 'success',
+            summary: 'Success',
+            detail: 'Update product successful!'
+          });
+          timer(2000)
+            .toPromise()
+            .then(() => {
+              this.handleBack();
+            });
+        },
+        () => {
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Error',
+            detail: 'Update product failed!'
+          });
+        }
+      )
     );
   }
 

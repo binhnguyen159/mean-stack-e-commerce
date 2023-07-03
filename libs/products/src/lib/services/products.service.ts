@@ -10,11 +10,13 @@ import { environment } from 'environments/environment';
 export class ProductsService {
   constructor(private httpClient: HttpClient) {}
 
-  apiURLProducts = environment.apiURL + '/api/v1/products';
+  apiURLProducts = environment.apiURL + '/products';
 
   getProducts(): Observable<Product[]> {
-    console.log('environment.apiURL', environment.apiURL);
     return this.httpClient.get<Product[]>(`${this.apiURLProducts}`);
+  }
+  getTotalProducts(): Observable<number> {
+    return this.httpClient.get<number>(`${this.apiURLProducts}/get/count`);
   }
 
   getDetailProduct(id: string): Observable<Product> {

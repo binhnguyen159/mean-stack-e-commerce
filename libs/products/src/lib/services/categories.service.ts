@@ -10,10 +10,9 @@ import { environment } from 'environments/environment';
 export class CategoriesService {
   constructor(private httpClient: HttpClient) {}
 
-  apiURLCategories = environment.apiURL + '/api/v1/categories';
+  apiURLCategories = environment.apiURL + '/categories';
 
   getCategories(): Observable<Category[]> {
-    console.log('environment.apiURL', environment.apiURL);
     return this.httpClient.get<Category[]>(`${this.apiURLCategories}`);
   }
 
