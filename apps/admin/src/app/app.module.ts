@@ -4,6 +4,8 @@ import { RouterModule } from '@angular/router';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { StoreModule } from '@ngrx/store';
+import { EffectsModule } from '@ngrx/effects';
 
 // UI Module
 import { CardModule } from 'primeng/card';
@@ -91,6 +93,8 @@ const UX_MODULE = [
     FormsModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
+    StoreModule.forRoot({}),
+    EffectsModule.forRoot([]),
     ...UX_MODULE
   ],
   providers: [

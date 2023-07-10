@@ -1,0 +1,48 @@
+@import './../../../../../../styles/ngeshop.scss';
+
+.product-item {
+  min-height: 250x;
+  background-color: var(--surface-200);
+  border: 1ox solid var;
+  border-radius: 8px;
+
+  .product-item-wrapper {
+    margin-top: 85px;
+    text-align: center;
+
+    .product-name,
+    .product-price {
+      font-size: 1.2rem;
+      font-weight: 500;
+      margin: 0;
+    }
+
+    .product-price {
+      font-size: 1rem;
+      font-weight: 700;
+      color: $primary-color;
+    }
+
+    .image {
+      height: 150px;
+      width: 60%;
+      margin-top: -3.125rem;
+      margin-bottom: 1rem;
+      border-radius: 14px;
+    }
+
+    ::ng-deep .add-to-cart {
+      background-color: $primary-color;
+      margin-bottom: 1.5rem;
+      border-radius: 15px;
+      border: none;
+      outline: none;
+
+      &:enabled:hover {
+        border: none;
+        outline: none;
+      }
+    }
+
+  }
+}

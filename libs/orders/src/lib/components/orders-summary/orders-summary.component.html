@@ -1,0 +1,21 @@
+<div class="order-summary-page">
+  <h4>Order Summary</h4>
+  <div class="order-price mt-4">
+    Items Price:
+    <span>{{ totalMoney | currency }}</span>
+  </div>
+  <div class="order-pack-ship mt-2">
+    Packing & Shipping;
+    <span class="free">Free</span>
+  </div>
+  <div class="order-total-price mt-2">
+    Total Price:
+    <span>{{ totalMoney | currency }}</span>
+  </div>
+  <p-button
+    label="Checkout"
+    styleClass="p-button-sm w-full mt-3"
+    (click)="handleNavigateToCheckout()"
+    *ngIf="!isCheckout"
+  ></p-button>
+</div>

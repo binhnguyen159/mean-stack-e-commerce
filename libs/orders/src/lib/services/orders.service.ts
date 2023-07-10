@@ -11,6 +11,7 @@ export class OrdersService {
   constructor(private httpClient: HttpClient) {}
 
   apiURLOrders = environment.apiURL + '/orders';
+  apiURLProducts = environment.apiURL + '/products';
 
   getOrders(): Observable<Order[]> {
     return this.httpClient.get<Order[]>(`${this.apiURLOrders}`);
@@ -40,5 +41,9 @@ export class OrdersService {
       `${this.apiURLOrders}/${order.id}`,
       order
     );
+  }
+
+  getProduct(id: string): Observable<any[]> {
+    return this.httpClient.get<any[]>(`${this.apiURLProducts}/${id}`);
   }
 }

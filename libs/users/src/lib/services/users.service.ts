@@ -3,12 +3,16 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from '@env/environment';
 import { Observable } from 'rxjs';
 import { User } from '../models/user';
+import { UsersFacade } from '../state/users.facade';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UsersService {
-  constructor(private httpClient: HttpClient) {}
+  constructor(
+    private httpClient: HttpClient,
+    private usersFacade: UsersFacade
+  ) {}
 
   apiURLUsers = environment.apiURL + '/users';
 
@@ -36,5 +40,17 @@ export class UsersService {
 
   updateUser(user: User): Observable<object> {
     return this.httpClient.put<object>(`${this.apiURLUsers}/${user.id}`, user);
+  }
+
+  initAppSession() {
+    this.usersFacade.buildUserSession();
+  }
+
+  observeCurrentUser() {
+    return this.usersFacade.currentUser$;
+  }
+
+  isCurrentUserAuth() {
+    return this.usersFacade.isAuthenticated$;
   }
 }

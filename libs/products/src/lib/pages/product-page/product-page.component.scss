@@ -1,0 +1,74 @@
+@import './../../../../../../styles/ngeshop.scss';
+
+.product-page {
+  .product-name {
+    font-size: 2rem;
+  }
+
+  .product-desc {
+    font-size: 1.4rem;
+  }
+
+  .product-rating {
+    margin: 1rem 0;
+  }
+
+  .product-price {
+    font-size: 1.4rem;
+    font-weight: 600;
+    border-bottom: 1px solid var(--surface-300);
+    padding: 25px 0;
+
+    .price-before {
+      font-size: 1rem;
+      margin-left: 0.75rem;
+      font-weight: 200;
+      color: var(--surface-500);
+      text-decoration: line-through;
+    }
+  }
+
+  .product-quantity {
+    margin: 1.25rem 0;
+
+    label {
+      font-size: 1.2rem;
+    }
+  }
+
+  .product-rich-desc {
+    line-height: 1.6;
+  }
+}
+
+::ng-deep .p-button {
+  background-color: $primary-color;
+  border: none;
+  outline: none;
+  box-shadow: none;
+
+  &:hover {
+    background-color: $primary-color;
+    border: none;
+    outline: none;
+    box-shadow: none;
+  }
+
+  &:focus {
+    background-color: $primary-color;
+    border: none;
+    outline: none;
+    box-shadow: none;
+  }
+}
+
+::ng-deep .p-inputtext {
+  &:enabled:focus {
+    box-shadow: none;
+    border-color: #ced4da;
+  }
+
+  &:enabled:hover {
+    border-color: #ced4da;
+  }
+}

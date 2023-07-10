@@ -1,0 +1,21 @@
+header {
+  // display: flex;
+  //   align-items: center;
+  height: 94px;
+  .logo {
+    img {
+      width: 160px;
+    }
+  }
+
+  .navigation {
+    text-align: right;
+  }
+
+  .tools{
+    // padding-top: 15px;
+    .pi {
+      margin-right: 10px;
+    }
+  }
+}

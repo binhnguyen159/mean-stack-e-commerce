@@ -1,0 +1,48 @@
+@import './../../../../../../styles/ngeshop.scss';
+
+.banner {
+  height: 280px;
+  width: 100%;
+  background-color: #D7EFFB;
+  border-radius: 15px;
+
+  .banner-text {
+    color: var(--surfacr-700);
+    margin-top: 50px;
+
+    h1 {
+      margin: 0;
+      font-size: 3rem;
+      font-weight: 400;
+    }
+
+    h2 {
+      margin: 0;
+      font-size: 2rem;
+      font-weight: 300;
+    }
+
+    ::ng-deep .banner-button {
+      background-color: var(--surface-0);
+      color: $primary-color;
+      border: 0;
+      border-radius: 13px;
+      height: 50px;
+
+      &:hover {
+        background-color: var(--surface-0);
+        color: $primary-color;
+        border: 0;
+      }
+    }
+  }
+
+  .banner-image {
+    text-align: right;
+
+    img {
+      padding: 15px 15px 0 0;
+    }
+  }
+
+}

@@ -1,0 +1,74 @@
+<div class="orders-page">
+  <div class="grid">
+    <div class="col-8">
+      <div class="btn-go-back">
+        <p-button
+          label="Continue Shopping"
+          icon="pi pi-arrow-left"
+          styleClass="p-button-sm btn-primary mt-5"
+          (click)="handleGoBack()"
+        ></p-button>
+      </div>
+      <div class="label-cart mt-5">My Cart: {{ cartCount }} item(s)</div>
+      <div class="label-ship mt-5">
+        Shipping after payment. Delivery time: 1 to 4 working days
+      </div>
+      <div
+        *ngFor="let cartItemDetail of cartItemsDetail"
+        class="cart-item mt-5"
+      >
+        <div class="grid p-fluid" *ngIf="cartItemDetail.id">
+          <div class="col-2 cart-item-image">
+            <img
+              [src]="cartItemDetail.image"
+              alt=""
+              width="100%"
+              height="100%"
+            />
+          </div>
+          <div class="col-7">
+            <div class="cart-item-name">{{ cartItemDetail.name }}</div>
+            <div class="cart-item-price">
+              {{ cartItemDetail.price | currency }}
+            </div>
+            <div class="cart-item-remove">
+              <p-button
+                icon="pi pi-trash"
+                styleClass="p-button-sm btn-primary mt-5"
+                (click)="handleRemoveCartItem(cartItemDetail.id)"
+              ></p-button>
+            </div>
+          </div>
+          <div class="col-3">
+            <div class="cart-item-quntity">
+              <p-inputNumber
+                [(ngModel)]="cartItemDetail.quantity"
+                mode="decimal"
+                [showButtons]="true"
+                inputId="minmax-buttons"
+                [min]="0"
+                [max]="100"
+                (onInput)="handleOnInput($event, cartItemDetail)"
+              >
+              </p-inputNumber>
+            </div>
+            <div class="cart-item-subtotal">
+              Subtotal:
+              <span class="cart-item subtotal-value">
+                {{
+                  (cartItemDetail.price || 0) * (cartItemDetail.quantity || 0)
+                    | currency
+                }}
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-4">
+      <orders-summary
+        [totalMoney]="totalMoney"
+      ></orders-summary>
+    </div>
+  </div>
+</div>

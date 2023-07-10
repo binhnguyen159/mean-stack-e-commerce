@@ -1,0 +1,19 @@
+<div class="product-item" *ngIf="product">
+  <div class="product-item-wrapper">
+    <img
+      [src]="product.image"
+      [routerLink]="'/products/' + product.id"
+      class
+      alt="product item image"
+      class="image"
+    />
+    <h4 class="product-name">{{ product.name }}</h4>
+    <h4 class="product-price">{{ product.price | currency }}</h4>
+    <p-button
+      label="Add To Cart"
+      icon="pi pi-shopping-cart"
+      styleClass="mt-3 add-to-cart p-button-sm"
+      (click)="AddProductToCart(product)"
+    ></p-button>
+  </div>
+</div>
