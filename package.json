@@ -3,7 +3,9 @@
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
-    "lint": "nx run ngeshop:lint && nx run admin:lint"
+    "lint": "nx run ngeshop:lint && nx run admin:lint",
+    "admin:dev": "nx serve admin",
+    "ngeshop:dev": "nx serve ngeshop"
   },
   "private": true,
   "dependencies": {
@@ -74,4 +76,3 @@
     "typescript": "5.1.6"
   }
 }
-

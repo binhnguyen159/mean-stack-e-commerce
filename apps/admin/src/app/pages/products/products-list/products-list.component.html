@@ -54,7 +54,7 @@
               <td>{{ product.price }}</td>
               <td>{{ product.countInStock }}</td>
               <td>{{ product.dateCreated | date : 'short' }}</td>
-              <td>{{ product.category.name }}</td>
+              <td>{{ product.category?.name }}</td>
               <td>
                 <p-button
                   icon="pi pi-trash"

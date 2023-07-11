@@ -48,6 +48,7 @@ import { UsersListComponent } from './pages/users/users-list/users-list.componen
 import { UsersFormComponent } from './pages/users/users-form/users-form.component';
 import { OrdersListComponent } from './pages/orders/orders-list/orders-list.component';
 import { OrdersDetailComponent } from './pages/orders/orders-detail/orders-detail.component';
+import { NgxStripeModule } from 'ngx-stripe';
 
 const UX_MODULE = [
   CardModule,
@@ -95,6 +96,7 @@ const UX_MODULE = [
     BrowserAnimationsModule,
     StoreModule.forRoot({}),
     EffectsModule.forRoot([]),
+    NgxStripeModule.forRoot("pk_test_51NSWrjHMXZU8CGVPgfL1DWYsynqMi9e9cWHMGnIBC7EaZzMVAXIohph8QbtJco6EaaG8Sx0bIxk6cGeQlw9PBT6R0034OPUYSf"),
     ...UX_MODULE
   ],
   providers: [
