@@ -5,6 +5,9 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { appRoutes } from './app.routes';
 
+// Stripe module
+import { NgxStripeModule } from 'ngx-stripe'
+
 // Components
 import { NxWelcomeComponent } from './nx-welcome.component';
 import { HomePageComponent } from './pages/home-page/home-page.component';
@@ -17,7 +20,7 @@ import { UiModule } from '@bluebits/ui';
 import { ProductsModule } from '@bluebits/products';
 import { OrdersModule } from '@bluebits/orders';
 
-import { JwtInterceptor, UsersModule, UsersService } from '@bluebits/users';
+import { JwtInterceptor, UsersModule } from '@bluebits/users';
 
 // UI_module
 import { ButtonModule } from 'primeng/button';
@@ -44,6 +47,7 @@ const UI_MODULE = [ProductsModule, ButtonModule];
     UsersModule,
     StoreModule.forRoot({}),
     EffectsModule.forRoot([]),
+    NgxStripeModule.forRoot("pk_test_51NSWrjHMXZU8CGVPgfL1DWYsynqMi9e9cWHMGnIBC7EaZzMVAXIohph8QbtJco6EaaG8Sx0bIxk6cGeQlw9PBT6R0034OPUYSf"),
     ...UI_MODULE
   ],
   providers: [

@@ -3,6 +3,7 @@ import { Cart } from '../models/cart';
 import { CartItem } from '../models/cart-item';
 import { BehaviorSubject } from 'rxjs';
 export const CART_KEY = 'cart';
+export const ORDER_CART_KEY = 'orderData';
 export const INITIAL_CART = { items: [] };
 @Injectable({
   providedIn: 'root'
@@ -25,6 +26,7 @@ export class CartService {
 
   setCartItemToLocalStorage(cart: Cart) {
     localStorage.setItem(CART_KEY, JSON.stringify(cart));
+    localStorage.setItem(ORDER_CART_KEY, JSON.stringify(null));
   }
 
   setCartItem(cartItem: CartItem): Cart {

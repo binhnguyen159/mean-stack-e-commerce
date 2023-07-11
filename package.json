@@ -2,7 +2,9 @@
   "name": "@bluebits/source",
   "version": "0.0.0",
   "license": "MIT",
-  "scripts": {},
+  "scripts": {
+    "lint": "nx run ngeshop:lint && nx run admin:lint"
+  },
   "private": true,
   "dependencies": {
     "@angular/animations": "~16.0.0",

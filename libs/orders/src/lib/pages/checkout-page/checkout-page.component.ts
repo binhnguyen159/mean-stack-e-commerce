@@ -8,6 +8,7 @@ import { forkJoin, Subscription } from 'rxjs';
 import { Order } from '../../models/order';
 import { OrderItem } from '../../models/order-item';
 import { UsersService } from '@bluebits/users';
+import { StripeService } from 'ngx-stripe';
 declare const require;
 
 @Component({
@@ -20,7 +21,7 @@ export class CheckoutPageComponent implements OnInit, OnDestroy {
   form: FormGroup;
   isSubmitted = false;
   totalMoney = 0;
-  userId = '64868166c5c2199d7834a746';
+  userId = '';
   orderItems: OrderItem[];
   subscriptions: Subscription[] = [];
 
@@ -28,7 +29,6 @@ export class CheckoutPageComponent implements OnInit, OnDestroy {
     private cartService: CartService,
     private ordersService: OrdersService,
     private usersService: UsersService,
-    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -118,14 +118,24 @@ export class CheckoutPageComponent implements OnInit, OnDestroy {
     this.isSubmitted = true;
     if (this.form.invalid) return;
     const order: Order = this.getDataForm(this.checkoutForm);
+    this.ordersService.cacheOrderData(order)
     console.log({ order });
-    this.subscriptions.push(
-      this.ordersService.addOrder(order).subscribe(() => {
-        this.cartService.setCartItemToLocalStorage(INITIAL_CART);
-        this.cartService.cart$.next(INITIAL_CART);
-        this.router.navigate(['/success']);
-      })
-    );
+    this.subscriptions
+      .push
+      // this.ordersService.addOrder(order).subscribe(() => {
+      //   this.cartService.setCartItemToLocalStorage(INITIAL_CART);
+      //   this.cartService.cart$.next(INITIAL_CART);
+      //   this.router.navigate(['/success']);
+      // })
+      (
+
+        this.ordersService
+          .createCheckoutSession(this.orderItems)
+          .subscribe((session) => {
+            console.log('createCheckoutSession', session);
+          })
+      );
+
   }
 
   get checkoutForm() {
